@@ -1,0 +1,146 @@
+<div bsModal #editOrderModal="bs-modal" class="modal fade" (onShown)="onShown()" tabindex="-1" role="dialog"
+  aria-labelledby="editOrderModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog">
+    <div #modalContent class="modal-content">
+      <form *ngIf="active" #editOrderForm="ngForm" id="frm_edit_order" novalidate (ngSubmit)="save()">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">
+            <span>添加订单</span>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <div class="row clearfix" style="margin-top:10px;">
+            <div class="col-sm-6">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <input id="arrivalDateTime" type="text" name="arrivalDateTime" [(ngModel)]="arrivalDateTime" class="validate form-control datetimepicker">
+                  <label for="arrivalDateTime" class="form-label">网站到货时间</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <input id="price" type="text" name="price" [(ngModel)]="order.price" required class="validate form-control">
+                  <label for="price" class="form-label">产品价格</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-sm-6">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <input id="trueBuyPrice" type="text" name="trueBuyPrice" [(ngModel)]="order.trueBuyPrice" class="validate form-control">
+                  <label for="trueBuyPrice" class="form-label">实际订购价格</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <input id="trueSalePrice" type="text" name="trueSalePrice" [(ngModel)]="order.trueSalePrice" class="validate form-control">
+                  <label for="trueSalePrice" class="form-label">实际销售价格</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-sm-12">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <input id="usaLogisticsNumber" type="text" name="usaLogisticsNumber" [(ngModel)]="order.usaLogisticsNumber"
+                    class="validate form-control">
+                  <label for="usaLogisticsNumber" class="form-label">美国物流单号</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <input id="transportNumber" type="number" name="transportNumber" [(ngModel)]="order.transportNumber"
+                    class="validate form-control">
+                  <label for="transportNumber" class="form-label">转运单号</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <input id="transportPrice" type="text" name="transportPrice" [(ngModel)]="order.transportPrice" class="validate form-control">
+                  <label for="transportPrice" class="form-label">转运价格</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-sm-6">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <input id="chinaLogisticsNumber" type="text" name="chinaLogisticsNumber" [(ngModel)]="order.chinaLogisticsNumber"
+                    class="validate form-control">
+                  <label for="chinaLogisticsNumber" class="form-label">国内物流单号</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <input id="chinalogisticsPrice" type="text" name="chinalogisticsPrice" [(ngModel)]="order.chinalogisticsPrice"
+                    class="validate form-control">
+                  <label for="chinalogisticsPrice" class="form-label">国内运费</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <select class="form-control show-tick" name="accountId" id="accountId" [(ngModel)]="order.accountId">
+                    <option *ngFor="let user of users" [value]="user.id">{{user.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <select class="form-control show-tick" name="state" id="state" [(ngModel)]="order.state">
+                    <option value="0">等待订购</option>
+                    <option value="1">已经订购</option>
+                    <option value="2">美国出单</option>
+                    <option value="3">转运出单</option>
+                    <option value="4">国内发货</option>
+                    <option value="5">交易成功</option>
+                    <option value="6">交易失败</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <input id="notBuyDesc" type="text" name="notBuyDesc" [(ngModel)]="order.notBuyDesc" maxlength="4000"
+                    minlength="1" class="validate form-control">
+                  <label for="notBuyDesc" class="form-label">未订购说明</label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button [disabled]="saving" type="button" class="btn btn-default waves-effect" (click)="close()">
+            取消
+          </button>
+          <button [disabled]="!editOrderForm.form.valid || saving" type="submit" class="btn btn-primary waves-effect">
+            保存
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

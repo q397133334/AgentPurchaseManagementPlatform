@@ -1,0 +1,36 @@
+<div bsModal #addOtherdescModal="bs-modal" class="modal fade" (onShown)="onShown()" tabindex="-1" role="dialog"
+  aria-labelledby="addOtherdescModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog">
+    <div #modalContent class="modal-content">
+      <form *ngIf="active" #addOtherdescForm="ngForm" id="frm_add_otherdesc" novalidate (ngSubmit)="save()">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">
+            <span>添加说明</span>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <div class="row clearfix" style="margin-top:10px;">
+            <div class="col-sm-12">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <textarea class="form-control no-resize" name="otherDesc" [(ngModel)]="otherDesc" placeholder="其他说明"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button [disabled]="saving" type="button" class="btn btn-default waves-effect" (click)="close()">
+            取消
+          </button>
+          <button [disabled]="!addOtherdescForm.form.valid || saving" type="submit" class="btn btn-primary waves-effect">
+            保存
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

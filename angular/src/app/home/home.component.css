@@ -1,0 +1,12 @@
+.dropdown-menu > li > a,
+.bg-teal > td> a,
+.bg-amber >td >a,
+.bg-brown >td >a,
+.bg-blue >td >a,
+.bg-green>td>a,
+.bg-red>td>a{
+    color: #ffffff;
+}
+body > .input-group{
+    border-bottom: 0;
+}

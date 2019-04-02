@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <VersionPrefix>1.0.0.0</VersionPrefix>
+    <TargetFramework>net461</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <AssemblyName>AgentPurchaseManagementPlatform.Application</AssemblyName>
+    <PackageId>AgentPurchaseManagementPlatform.Application</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>AgentPurchaseManagementPlatform</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Authorization\Permissions\Dto\FlatPermissionWithLevelDto.cs~RFbce32bd.TMP" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AgentPurchaseManagementPlatform.Core\AgentPurchaseManagementPlatform.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+</Project>

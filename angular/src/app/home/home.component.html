@@ -1,0 +1,205 @@
+﻿<div class="row clearfix" [@routerTransition]>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card main-content" #content>
+            <div class="header">
+                <h2>
+                    我的订单
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <i class="fa fa-spin fa-spinner" *ngIf="isTableLoading"></i>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);" class=" waves-effect waves-block()"
+                                    (click)="refresh();"><i class="material-icons">refresh</i>刷新</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body table-responsive autoHeight">
+                <form #searchForm="ngForm" id="search_Form" novalidate>
+                    <div class="row clearfix">
+                        <div class="col-sm-3  col-md-3 col-lg-1">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <select class="form-control show-tick" name="state" id="state"
+                                        [(ngModel)]="orderType">
+                                        <option value="-1">全部</option>
+                                        <option value="0">等待订购</option>
+                                        <option value="1">已经订购</option>
+                                        <option value="2">美国出单</option>
+                                        <option value="3">转运出单</option>
+                                        <option value="4">国内发货</option>
+                                        <option value="5">交易成功</option>
+                                        <option value="6">交易失败</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group form-float  input-group">
+                                <div class="form-line">
+                                    <input type="text" id="downFrom" name="downFrom" class="form-control datetimepicker"
+                                        placeholder="国内下单时间" />
+                                </div>
+                                <span class="input-group-addon">到&nbsp;&nbsp;</span>
+                                <div class="form-line">
+                                    <input type="text" id="downTo" name="downTo" class="form-control datetimepicker"
+                                        placeholder="国内下单时间" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6  col-md-3">
+                            <div class="form-group form-float  input-group">
+                                <div class="form-line">
+                                    <input type="text" id="complateFrom" name="complateFrom"
+                                        class="form-control datetimepicker" placeholder="订单完成时间" />
+                                </div>
+                                <span class="input-group-addon">到&nbsp;&nbsp;</span>
+                                <div class="form-line">
+                                    <input type="text" id="complateTo" name="complateTo"
+                                        class="form-control datetimepicker" placeholder="订单完成时间" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6  col-md-3">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">search</i>
+                                </span>
+                                <div class="form-line">
+                                    <input type="text" name="key" [(ngModel)]="key" class="form-control"
+                                        placeholder="请输入内容进行搜索">
+                                </div>
+                                <span class="input-group-addon">
+                                    <button class="btn bg-blue waves-effect" type="button"
+                                        (click)="refresh()">搜索</button>
+                                    <button class="btn btn-default waves-effect" type="button"
+                                        (click)="resetSearch()">重置条件</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-hover" style="min-width:1540px;">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th width="70px">操作</th>
+                            <th width="100px;">下单时间</th>
+                            <th width="250px">产品名称</th>
+                            <th width="100px">图片</th>
+                            <th>订购信息</th>
+                            <th width="150px">价格信息</th>
+                            <th width="200px">物流信息</th>
+                            <th width="100px">状态</th>
+                            <th width="70px">淘宝</th>
+                            <th width="70px">订购人</th>
+                            <th>其他说明</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let order of orders | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: pageNumber, totalItems: totalItems }"
+                            [class.bg-teal]="order.state==1" [class.bg-amber]="order.state==2"
+                            [class.bg-brown]="order.state==3" [class.bg-blue]="order.state==4"
+                            [class.bg-green]="order.state==5" [class.bg-red]="order.state==6">
+                            <td>
+                                {{order.id}}
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-primary btn-xs dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <i class="material-icons">menu</i>
+                                    </button>
+                                    <ul class="dropdown-menu bg-blue">
+                                        <li *ngIf="isGranted(AppConsts.permissions.Pages_Orders_OtherDesc)"><a href="javascript:void(0);"
+                                                class="waves-effect waves-block"
+                                                (click)="addOtherdescModal.show(order.id)"><i
+                                                    class="material-icons">playlist_add</i>增加备注</a></li>
+                                        <li *ngIf="isGranted(AppConsts.permissions.Pages_Orders_Edit)"><a href="javascript:void(0);"
+                                                class="waves-effect waves-block" (click)="editOrder(order)"><i
+                                                    class="material-icons">create</i>编辑订单</a>
+                                        </li>
+                                        <li *ngIf="(order.state < compolateState) && isGranted(AppConsts.permissions.Pages_Orders_Down)"><a href="javascript:void(0);"
+                                                class="waves-effect waves-block" (click)="downOrder(order)"><i
+                                                    class="material-icons">create</i>订购订单</a>
+                                        </li>
+                                        <li *ngIf="(order.state < compolateState)  && isGranted(AppConsts.permissions.Pages_Orders_Complate)"><a href="javascript:void(0);" class="waves-effect waves-block"
+                                                (click)="complate(order.id)"><i
+                                                    class="material-icons">beenhere</i>完成订单</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </td>
+                            <td>{{order.chinaDateTime | date:"yyyy-MM-dd"}}</td>
+                            <td>
+                                <a href="{{order.productUrl}}" target="_blank">{{order.productName}}</a>
+                            </td>
+                            <td>
+                                <img src="{{order.imageUrl}}" style="width: 100%" />
+                            </td>
+                            <td>
+                                数量：{{order.quantity}}<br />
+                                规格：{{order.specifications}}<br />
+                                地址：{{order.customerAddress}}<br />
+                                要求：{{order.customerDesc}}<br />
+                            </td>
+                            <td>
+                                销售价格：{{order.price}}<br />
+                                订购价格：{{order.trueBuyPrice}}<br />
+                            </td>
+                            <td>
+                                美国单号：{{order.usaLogisticsNumber}}<br />
+                                转运运费：{{order.transportPrice}}<br />
+                                转运单号：{{order.transportNumber}}<br />
+                                国内运费：{{order.chinalogisticsPrice}}<br />
+                                国内单号：{{order.chinaLogisticsNumber}}<br />
+                            </td>
+                            <td>
+                                {{
+                                order.state==0?"等待订购":
+                                order.state==1?"已经订购":
+                                order.state==2?"美国出单":
+                                order.state==3?"转运出单":
+                                order.state==4?"国内发货":
+                                order.state==5?"交易成功":
+                                order.state==6?"交易失败":""
+
+                                }}
+                            </td>
+                            <td>
+                                {{order.taobaoShop}}
+                            </td>
+                            <td>
+                                {{order.account}}
+                            </td>
+                            <td [innerHTML]="order.otherDesc">
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-align: center;" *ngIf="totalItems > pageSize">
+                    <abp-pagination-controls (pageChange)="getDataPage($event)" id="server"></abp-pagination-controls>
+                </div>
+                <button *ngIf="isGranted(AppConsts.permissions.Pages_Orders_Add)" type="button" data-toggle="modal"
+                    class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right"
+                    (click)="createOrder()">
+                    <i class="material-icons">add</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<create-order-modal #createOrderModal (modalSave)="refresh()"></create-order-modal>
+<edit-order-modal #editOrderModal (modalSave)="refresh()"></edit-order-modal>
+<down-order-modal #downOrderModal (modalSave)="refresh()"></down-order-modal>
+<add-otherdesc #addOtherdescModal (modalSave)="refresh()"></add-otherdesc>

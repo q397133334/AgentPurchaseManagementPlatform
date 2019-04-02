@@ -1,0 +1,136 @@
+<div bsModal #createOrderModal="bs-modal" class="modal fade" (onShown)="onShown()" tabindex="-1" role="dialog"
+    aria-labelledby="createOrderModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog">
+        <div #modalContent class="modal-content">
+            <form *ngIf="active" #createOrderForm="ngForm" id="frm_create_order" novalidate (ngSubmit)="save()">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">
+                        <span>添加订单</span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row clearfix" style="margin-top:10px;">
+                            <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input id="chinaDateTime" type="text" name="chinaDateTime" [(ngModel)]="chinaDateTime"
+                                                required maxlength="4000" minlength="1" class="validate form-control datetimepicker">
+                                            <label for="chinaDateTime" class="form-label">下单时间</label>
+                                        </div>
+                                    </div>
+                                </div>
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="productname" type="text" name="ProductName" [(ngModel)]="order.productName"
+                                        required maxlength="4000" minlength="1" class="validate form-control">
+                                    <label for="productname" class="form-label">产品名称</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="producturl" type="text" name="ProductUrl" [(ngModel)]="order.productUrl"
+                                        required maxlength="4000" minlength="1" class="validate form-control">
+                                    <label for="producturl" class="form-label">产品链接</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-10">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="imageurl" type="text" name="ImageUrl" [(ngModel)]="order.imageUrl"
+                                        required maxlength="4000" minlength="1" class="validate form-control">
+                                    <label for="imageurl" class="form-label">产品图片</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <img [src]="order.imageUrl" style="height:100%; width: 100%">
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-6">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="price" type="text" name="price" [(ngModel)]="order.price" required class="validate form-control">
+                                    <label for="price" class="form-label">参考价格($)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="trueSalePrice" type="text" name="trueSalePrice" [(ngModel)]="order.trueSalePrice" required class="validate form-control">
+                                    <label for="trueSalePrice" class="form-label">实际销售价格(￥)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="quantity" type="number" name="quantity" [(ngModel)]="order.quantity"
+                                        required class="validate form-control">
+                                    <label for="quantity" class="form-label">数量</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="specifications" type="text" name="specifications" [(ngModel)]="order.specifications"
+                                        required maxlength="4000" minlength="1" class="validate form-control">
+                                    <label for="specifications" class="form-label">规格</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="customerAddress" type="text" name="customerAddress" [(ngModel)]="order.customerAddress"
+                                        required maxlength="4000" minlength="1" class="validate form-control">
+                                    <label for="customerAddress" class="form-label">客户地址</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="customerDesc" type="text" name="customerDesc" [(ngModel)]="order.customerDesc"
+                                         maxlength="4000" minlength="1" class="validate form-control">
+                                    <label for="customerDesc" class="form-label">客户要求</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input id="otherDesc" type="text" name="otherDesc" [(ngModel)]="order.otherDesc"
+                                         maxlength="4000" minlength="1" class="validate form-control">
+                                    <label for="otherDesc" class="form-label">其他说明</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default waves-effect" (click)="close()">
+                        取消
+                    </button>
+                    <button [disabled]="!createOrderForm.form.valid || saving" type="submit" class="btn btn-primary waves-effect">
+                        保存
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

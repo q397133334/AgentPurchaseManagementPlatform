@@ -1,0 +1,44 @@
+<div class="row clearfix" [@routerTransition]>
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card main-content">
+      <div class="header">
+        <h2>
+          {{ '系统设置' | localize }}
+        </h2>
+      </div>
+      <div class="body table-responsive autoHeight">
+        <div class="row clearfix">
+          <div class="col-sm-4">
+            <div class="form-group form-float">
+              <div class="form-line">
+                <input id="huilv" type="text" name="huilv" [(ngModel)]="huilv" required class="validate form-control">
+                <label for="huilv" class="form-label">{{ "美元汇率" | localize }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <button type="button" (click)="saveUSD_CYN()" class="btn btn-primary waves-effect">
+              {{ "Save" | localize }}
+            </button>
+          </div>
+        </div>
+        <div class="row clearfix">
+          <div class="col-sm-4">
+            <div class="form-group form-float">
+              <div class="form-line">
+                <input id="huilv" type="text" name="chinalogisticsPrice" [(ngModel)]="chinalogisticsPrice" required class="validate form-control">
+                <label for="huilv" class="form-label">{{ "国内默认运费" | localize }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <button type="button" (click)="saveChinalogisticsPrice()" class="btn btn-primary waves-effect">
+              {{ "Save" | localize }}
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
