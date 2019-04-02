@@ -6,7 +6,7 @@ export const permissionToTree = (parentName, permissions, grantedPermissionNames
       title: p.displayName,
       expand: true,
       selected: false,
-      checked: grantedPermissionNames.filter(g => g == p.name).length,
+      checked: grantedPermissionNames.filter(g => g == p.name).length > 0,
       data: p
     }
     node.children = permissionToTree(p.name, permissions.filter(cp => cp.parentName == p.name), grantedPermissionNames)

@@ -12,5 +12,15 @@ namespace AgentPurchaseManagementPlatform.Configuration
         {
             await SettingManager.ChangeSettingForUserAsync(AbpSession.ToUserIdentifier(), AppSettingNames.UiTheme, input.Theme);
         }
+
+        public async Task UpdateSettingChinalogisticsPrice(decimal value)
+        {
+            await SettingManager.ChangeSettingForApplicationAsync(AppSettingNames.ChinalogisticsPrice, value.ToString());
+        }
+
+        public async Task UpdateSettingUSD_CYN(decimal value)
+        {
+            await SettingManager.ChangeSettingForApplicationAsync(AppSettingNames.USD_CYN, value.ToString());
+        }
     }
 }

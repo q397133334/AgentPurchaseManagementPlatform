@@ -49,7 +49,7 @@ export const updateRole = (data) => {
   return axios.request({
     url: 'api/services/app/Role/Update',
     data: data,
-    method: 'post'
+    method: 'put'
   })
 }
 

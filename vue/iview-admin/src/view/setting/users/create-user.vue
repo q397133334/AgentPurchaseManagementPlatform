@@ -39,7 +39,7 @@
         <TabPane label="角色" name="roles">
           <CheckboxGroup v-model="user.roleNames">
             <Checkbox :label="role.normalizedName" v-for="role in roles" :key="role.id">
-              <span>{{role.name}}</span>
+              <span>{{role.displayName}}</span>
             </Checkbox>
           </CheckboxGroup>
         </TabPane>

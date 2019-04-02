@@ -31,7 +31,7 @@ export default [
   {
     path: '/',
     name: '_home',
-    redirect: '/home',
+    redirect: '/order/index',
     component: Main,
     meta: {
       hideInMenu: true,
@@ -52,8 +52,25 @@ export default [
     ]
   },
   {
+    path: '/order',
+    name: 'order',
+    meta: {
+      title: '订单管理',
+      icon: 'md-home'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'index',
+        name: 'order_index',
+        meta: { title: '订单列表', icon: 'md-home' },
+        component: () => import('@/view/order/list')
+      }
+    ]
+  },
+  {
     path: '/setting',
-    name: '设置',
+    name: 'setting',
     meta: {
       icon: 'md-settings',
       title: '设置'
@@ -62,7 +79,7 @@ export default [
     children: [
       {
         path: 'users',
-        name: '用户',
+        name: 'users',
         meta: {
           icon: 'md-person',
           title: '用户'
@@ -77,6 +94,24 @@ export default [
           title: '角色'
         },
         component: () => import('@/view/setting/roles/roles.vue')
+      },
+      {
+        path: 'params',
+        name: 'params',
+        meta: {
+          icon: 'md-build',
+          title: '参数设置'
+        },
+        component: () => import('@/view/setting/systemSetting.vue')
+      },
+      {
+        path: 'receiving',
+        name: 'receiving',
+        meta: {
+          icon: 'md-globe',
+          title: '收货设置'
+        },
+        component: () => import('@/view/setting/receiving/list.vue')
       }
     ]
   },
