@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       form: {
-        userNameOrEmailAddress: "super_admin",
+        userNameOrEmailAddress: "admin",
         password: "",
         rememberClient: true
       }

@@ -4,14 +4,16 @@ using AgentPurchaseManagementPlatform.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AgentPurchaseManagementPlatform.Migrations
 {
     [DbContext(typeof(AgentPurchaseManagementPlatformDbContext))]
-    partial class AgentPurchaseManagementPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190403034557_add_table_receiving")]
+    partial class add_table_receiving
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1069,21 +1071,6 @@ namespace AgentPurchaseManagementPlatform.Migrations
                     b.HasIndex("ReceivingId");
 
                     b.ToTable("ReceivingPersions");
-                });
-
-            modelBuilder.Entity("AgentPurchaseManagementPlatform.Configuration.Tag", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name");
-
-                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("AgentPurchaseManagementPlatform.MultiTenancy.Tenant", b =>
